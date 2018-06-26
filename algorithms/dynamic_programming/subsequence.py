@@ -1,45 +1,49 @@
 def longest_increasing_subsequence(l):
-	lengths = [1] * len(l)
-	max_length, max_length_index = 1, 0
-	for curr_index in range(1, len(l)):
-		curr_length = 1
-		for prev in range(curr_index):
-			if l[curr_index] > l[prev]:
-				curr_length = lengths[prev] + 1
-		lengths[curr_index] = max(lengths[curr_index], curr_length)
-		if lengths[curr_index] > max_length:
-			max_length_index = curr_index
-			max_length = lengths[curr_index]
-	subsequence = [l[max_length_index]]
-	curr_index = max_length_index
-	for i in range(max_length_index - 1, -1, -1):
-		if lengths[i] + 1 == lengths[curr_index]:
-			subsequence.insert(0, l[i])
-			curr_index = i
-	return subsequence
+    lengths = [1] * len(l)
+    max_length, max_length_index = 1, 0
+    for curr_index in range(1, len(l)):
+        curr_length = 1
+        for prev in range(curr_index):
+            if l[curr_index] > l[prev]:
+                curr_length = lengths[prev] + 1
+        lengths[curr_index] = max(lengths[curr_index], curr_length)
+        if lengths[curr_index] > max_length:
+            max_length_index = curr_index
+            max_length = lengths[curr_index]
+    subsequence = [l[max_length_index]]
+    curr_index = max_length_index
+    for i in range(max_length_index - 1, -1, -1):
+        if lengths[i] + 1 == lengths[curr_index]:
+            subsequence.insert(0, l[i])
+            curr_index = i
+    return subsequence
+
 
 def longest_common_subsequence(l1, l2):
-	lengths = [[0 for _ in range(len(l2) + 1)] for _ in range(len(l1) + 1)]
-	for i in range(1, len(l1) + 1):
-		for j in range(1, len(l2) + 1):
-			if l1[i - 1] == l2[j - 1]:
-				lengths[i][j] = lengths[i - 1][j - 1] + 1
-			else:
-				lengths[i][j] = max(lengths[i - 1][j],
-					lengths[i][j - 1])
-	subsequence = []
-	i, j = len(l1), len(l2)
-	for i in range(len(l1), 0, -1):
-		for j in range(len(l2), 0, -1):
-			if l1[i - 1] == l2[j - 1] and lengths[i][j] == lengths[i - 1][j - 1] + 1:
-				subsequence.insert(0, l1[i - 1])
-	return subsequence
+    lengths = [[0 for _ in range(len(l2) + 1)] for _ in range(len(l1) + 1)]
+    for i in range(1, len(l1) + 1):
+        for j in range(1, len(l2) + 1):
+            if l1[i - 1] == l2[j - 1]:
+                lengths[i][j] = lengths[i - 1][j - 1] + 1
+            else:
+                lengths[i][j] = max(lengths[i - 1][j],
+                                    lengths[i][j - 1])
+    subsequence = []
+    i, j = len(l1), len(l2)
+    for i in range(len(l1), 0, -1):
+        for j in range(len(l2), 0, -1):
+            if l1[i - 1] == l2[j - 1] and lengths[i][j] == lengths[i - 1][j - 1] + 1:
+                subsequence.insert(0, l1[i - 1])
+    return subsequence
+
 
 def longest_common_length(l1, l2):
-	return _longest_common_length(l1, l2)[len(l1)][len(l2)]
+    return _longest_common_length(l1, l2)[len(l1)][len(l2)]
+
 
 def longet_common_subsequence(l1, l2):
-	lengths = _longest_common_length(l1, l2)
+    lengths = _longest_common_length(l1, l2)
+
 
 "ADH"
 "GTAB"
