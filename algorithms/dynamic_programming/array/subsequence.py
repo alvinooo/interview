@@ -30,19 +30,15 @@ def longest_common_subsequence(l1, l2):
                                     lengths[i][j - 1])
     subsequence = []
     i, j = len(l1), len(l2)
-    for i in range(len(l1), 0, -1):
-        for j in range(len(l2), 0, -1):
-            if l1[i - 1] == l2[j - 1] and lengths[i][j] == lengths[i - 1][j - 1] + 1:
-                subsequence.insert(0, l1[i - 1])
+    while i > 0 and j > 0:
+        if l1[i - 1] == l2[j - 1] and lengths[i][j] == lengths[i - 1][j - 1] + 1:
+            subsequence.insert(0, l1[i - 1])
+            i, j = i - 1, j - 1
+        if lengths[i - 1][j] > lengths[i][j - 1]:
+            i -= 1
+        else:
+            j -= 1
     return subsequence
-
-
-def longest_common_length(l1, l2):
-    return _longest_common_length(l1, l2)[len(l1)][len(l2)]
-
-
-def longet_common_subsequence(l1, l2):
-    lengths = _longest_common_length(l1, l2)
 
 
 "ADH"
