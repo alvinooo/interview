@@ -3,19 +3,25 @@ import string
 
 # https://www.facebook.com/groups/405875789586377/permalink/888286181345333/
 # https://leetcode.com/problems/decode-ways/description/
-def recursive_decode(string, index=0):
-    if index == len(string):
-        return 0, True
-    valid_one, valid_two = False, False
-    if string[index] in letter_number_map:
-        decode_one, valid_two = recursive_decode(string, index + 1)
-    if string[index:index+1] in letter_number_map:
-        decode_two, valid_two = recursive_decode(string, index + 2)
-    ways = 0
-    if valid_one:
-        ways += decode_one
-    if valid_two:
-        ways += decode_two
+def recursive_decode(s, index=0):
+    if index >= len(s):
+        return 1
+    if s[index] == '0':
+        return 0
+    ways = recursive_decode(s, index + 1)
+    if index + 1 < len(s) and int(s[index:index+1]) <= 26:
+        ways += recursive_decode(s, index + 2)
     return ways
 
-letter_number_map = dict(zip(range(1,27), string.ascii_uppercase))
+
+def dynamic_decode(s):
+    ways = [0] * (len(s) + 1)
+    ways[len(s) - 1] = 1 if s[len(s) - 1] != '0' else 0
+    ways[-1] = 1
+    for index in range(len(s) - 2, -1, -1):
+        if s[index] == '0':
+            continue
+        ways[index] = ways[index + 1]
+        if int(s[index:index+1]) <= 26:
+            ways[index] += ways[index + 2]
+    return ways[0]
